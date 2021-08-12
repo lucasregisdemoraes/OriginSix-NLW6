@@ -31,9 +31,11 @@ img {
   --text-color-light: hsl(0 0% 98%);
   --body-color: hsl(0 0% 98%);
 
-
   /* Fonts */
   --title-font-size: 1.875rem;
+  --subtitle-font-size: 1rem;
+  --body-font: "DM Sans", sans-serif;
+  --title-font: "Poppins", sans-serif;
 }
 
 /*      =======    BASE     ======= */
@@ -42,14 +44,14 @@ html {
 }
 
 body {
-  font: 400 1rem "DM Sans", sans-serif;
+  font: 400 1rem var(--body-font);
   color: var(--text-color);
   background: var(--body-color);
   -webkit-font-smoothing: antialiased;
 }
 
 .title {
-  font: 700 var(--title-font-size) "Poppins", sans-serif;
+  font: 700 var(--title-font-size) var(--title-font);
   color: var(--title-color);
   -webkit-font-smoothing: auto;
 }
@@ -62,7 +64,7 @@ body {
   align-items: center;
   padding: 0 2rem;
   border-radius: 0.25rem;
-  font: 500 1rem "DM Sans", sans-serif;
+  font: 500 1rem var(--body-font);
   transition: background 0.3s;
 }
 
@@ -99,11 +101,15 @@ body {
 }
 
 .section {
-  padding: 5rem 0;
+  padding: 6rem 0;
 }
 
 .section .title {
   margin-bottom: 1rem;
+}
+
+.section .subtitle {
+  font-size: var(--subtitle-font-size);
 }
 
 .section header {
@@ -120,7 +126,6 @@ body {
 
 #header {
   border-bottom: 1px solid #e4e4e4;
-  margin-bottom: 2rem;
   display: flex;
 
   width: 100%;
@@ -135,14 +140,10 @@ body {
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
 }
 
-main {
-  margin-top: calc(var(--header-height) + 2rem);
-}
-
 /*      =======    LOGO     ======= */
 .logo {
   color: var(--title-color);
-  font: 700 1.31rem "Poppins", sans-serif;
+  font: 700 1.31rem var(--title-font);
 }
 
 .logo span {
@@ -171,7 +172,8 @@ nav ul li a {
   position: relative;
 }
 
-nav ul li a:hover {
+nav ul li a:hover,
+nav ul li a.active {
   color: var(--base-color);
 }
 
@@ -182,12 +184,13 @@ nav ul li a::after {
   background: var(--base-color);
 
   position: absolute;
-  bottom: -1.5rem;
+  bottom: -1.6rem;
   left: 0;
   transition: width 0.2s;
 }
 
-nav ul li a:hover::after {
+nav ul li a:hover::after,
+nav ul li a.active::after {
   width: 100%;
 }
 
@@ -254,6 +257,9 @@ nav.show .icon-close {
 /*      =======    HOME     ======= */
 #home {
   overflow: hidden;
+}
+#home.section {
+  padding-top: 9.5rem;
 }
 
 #home .container {
@@ -467,8 +473,8 @@ footer .brand p {
   margin-bottom: 0.5rem;
 }
 footer .social {
-  display: flex;
-  gap: 1.5rem;
+  grid-auto-flow: column;
+  width: min-content;
 }
 
 footer .social a {
@@ -496,16 +502,134 @@ footer .social a:hover {
   visibility: hidden;
   opacity: 0;
   transition: 0.5s;
+  transform: translateY(200%);
 }
 
 .back-to-top.show {
   visibility: visible;
   opacity: 1;
+  transform: translateY(0);
 }
 
 /*      =======    MEDIA QUERY     ======= */
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
   :root {
     --title-font-size: 2.25rem;
+    --subtitle-font-size: 1.275rem;
+  }
+
+  /*      =======    LAYOUT     ======= */
+  .container {
+    max-width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section {
+    padding: 10rem 0;
+  }
+
+  .section header {
+    max-width: 32rem;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .button {
+    height: 3.125rem;
+  }
+
+  /*      =======    NAVIGATION     ======= */
+  nav ul li a.title {
+    font: 400 1rem var(--body-font);
+  }
+
+  nav .icon-menu {
+    display: none;
+  }
+
+  nav .menu {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  nav .menu ul {
+    display: flex;
+  }
+
+  nav .menu ul li a.title {
+    font: 400 1rem var(--body-font);
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  nav .menu ul li a.active {
+    font-weight: 700;
+    -webkit-font-smoothing: auto;
+  }
+
+  /*      =======    HOME     ======= */
+  #home.section {
+    padding-top: 15rem;
+  }
+
+  #home .container,
+  #about .container {
+    margin-left: auto;
+    margin-right: auto;
+    grid-auto-flow: column;
+  }
+  
+  #home .image {
+    order: 1;
+  }
+  
+  #home .text {
+    margin: 0;
+    order: 0;
+    text-align: left;
+    width: 24rem;
+  }
+
+  /*      =======    SERVICES     ======= */
+  .cards {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .card {
+    padding-right: 3rem;
+    padding-left: 3rem;
+  }
+
+  /*      =======    TESTIMONIALS     ======= */
+  #testimonials .container,
+  #testimonials header {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /*      =======    CONTACT     ======= */
+  #contact .container {
+    grid-auto-flow: column;
+    align-items: center;
+  }
+
+  #contact .text {
+    max-width: 25rem;
+  }
+
+  /*      =======    FOOTER     ======= */
+  footer.section {
+    padding: 3.75rem 0;
+  }
+
+  footer .container {
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  footer.section .logo {
+    font-size: 2.25rem;
   }
 }

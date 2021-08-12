@@ -23,6 +23,12 @@ const swiper = new Swiper(".swiper-container", {
   },
   mousewheel: true,
   keyboard: true,
+  breakpoints: {
+    767: {
+      slidesPerView: 2,
+      setWrapperSize: true
+    }
+  }
 });
 
 // ScrollRevel: show element when scroll the page
@@ -45,26 +51,55 @@ scrollReveal.reveal(
 );
 
 // Header scroll Function
-function headerScroll() {
-  const header = document.querySelector("#header");
-  let navHeight = header.offsetHeight;
+const header = document.querySelector("#header");
+let navHeight = header.offsetHeight;
 
+function headerScroll() {
   window.scrollY >= navHeight
     ? header.classList.add("scroll")
     : header.classList.remove("scroll");
 }
 
 // Back to top Function
-function backToTop() {
-  const backToTopButton = document.querySelector(".back-to-top");
+const backToTopButton = document.querySelector(".back-to-top");
 
+function backToTop() {
   window.scrollY >= 560
     ? backToTopButton.classList.add("show")
     : backToTopButton.classList.remove("show");
+}
+
+// Active menu
+const sections = document.querySelectorAll('main section[id]')
+
+function activeMenuLink() {
+  const checkpoint = window.pageYOffset + (window.innerHeight / 8) * 4
+
+  for (const section of sections) {
+    const sectionTop = section.offsetTop
+    const sectionHeight = section.offsetHeight
+    const sectionId = section.getAttribute('id')
+
+    const checkpointStart = checkpoint >= sectionTop
+    const checkpointEnd = checkpoint <= sectionTop + sectionHeight
+
+    let currentSection = document.querySelector(`nav ul li a[href='#${sectionId}']`)
+
+    checkpointStart && checkpointEnd ? currentSection.classList.add('active') : currentSection.classList.remove('active')
+    // Or
+    /*
+    if (checkpoiintStart && checkpointEnd) {
+      currentSection.classList.add('active')
+    } else {
+      currentSection.classList.remove('active')
+    }
+    */
+  }
 }
 
 // When Scroll
 window.addEventListener("scroll", () => {
   backToTop();
   headerScroll();
+  activeMenuLink()
 });
