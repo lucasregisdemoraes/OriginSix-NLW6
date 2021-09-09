@@ -2,6 +2,8 @@
 
 Projeto da NLW#6 - Mission Origin da [Rocketseat](https://github.com/Rocketseat)
 
+Você pode ver essa página [aqui](https://lucasregisdemoraes.github.io/beauty-salon/)
+
 ---
 
 ![beautysalon preview](./assets/img/beauty-salon-preview.png)
